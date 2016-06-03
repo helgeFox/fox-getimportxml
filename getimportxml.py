@@ -4,7 +4,6 @@ from suds.client import Client
 
 class ShowContentsCommand(sublime_plugin.TextCommand):
   def run(self, edit, content):
-    print 'content: ' + content
     for region in self.view.sel():
       self.view.replace(edit, region, content)
 
