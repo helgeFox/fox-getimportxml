@@ -33,9 +33,8 @@ class getimportxmlCommand(sublime_plugin.TextCommand):
       self.show_result(result)
 
   def show_result(self, content):
-    print (content.Xml)
     for region in self.view.sel():
-      self.view.replace(self.edit, region, content.Xml)
+      self.view.run_command('show_contents', {"content": content.Xml})
       self.view.run_command('fox_cleanup_xml')
 
   def on_panel_change(self, abbr):
