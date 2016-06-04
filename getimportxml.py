@@ -33,9 +33,9 @@ class getimportxmlCommand(sublime_plugin.TextCommand):
       self.show_result(result)
 
   def show_result(self, content):
-    for region in self.view.sel():
-      self.view.run_command('show_contents', {"content": content.Xml})
-      self.view.run_command('fox_cleanup_xml')
+    view = sublime.active_window().new_file()
+    view.run_command('show_contents', {"content": content.Xml})
+    view.run_command('fox_cleanup_xml')
 
   def on_panel_change(self, abbr):
     if abbr:
