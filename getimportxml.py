@@ -9,16 +9,23 @@ class ShowContentsCommand(sublime_plugin.TextCommand):
 
 class getimportxmlCommand(sublime_plugin.TextCommand):
 
-  url = 'http://ws.prod.stage.foxpublish.net/EditorService.asmx?WSDL'
-  edit = None
+  url = ''
+  environments = {
+    'stage': 'http://ws.prod.stage.foxpublish.net/EditorService.asmx?WSDL',
+    'prod': 'http://ws.prod.foxpublish.net/EditorService.asmx?WSDL'
+    }
 
   def is_enabled(self):
     return True
 
   def run(self, edit):
-    self.edit = edit
+    options = ['Stage', 'Prod']
+    self.view.window().show_quick_panel(options, self.request_sessoinid)
+
+  def request_sessoinid(self, index):
+    self.url = self.environments['stage'] if index == 0 else self.environments['prod']
     caption = "Set sessionid"
-    initial_text = "<paste your session id here!>"
+    initial_text = ""
     panel = self.view.window().show_input_panel (
       caption, 
       initial_text, 
@@ -30,7 +37,10 @@ class getimportxmlCommand(sublime_plugin.TextCommand):
     if sessionid:
       client = Client(self.url)
       result = client.service.GetImportXml(sessionid)
-      self.show_result(result)
+      try:
+        self.show_result(result)
+      except:
+        sublime.messageBox('No xml returned from service.')
 
   def show_result(self, content):
     view = sublime.active_window().new_file()
@@ -39,9 +49,9 @@ class getimportxmlCommand(sublime_plugin.TextCommand):
 
   def on_panel_change(self, abbr):
     if abbr:
-      print ("Input panel changed... (" + abbr + ")")
+      print ("Input: " + abbr)
       return
 
-  def on_cancel(self, abbr):
+  def on_cancel(self):
     print ('GetImportXml cancelled')
     return
