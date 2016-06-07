@@ -11,19 +11,34 @@ class getimportxmlCommand(sublime_plugin.TextCommand):
 
   url = ''
   environments = {
-    'stage': 'http://ws.prod.stage.foxpublish.net/EditorService.asmx?WSDL',
-    'prod': 'http://ws.prod.foxpublish.net/EditorService.asmx?WSDL'
+    'Stage': 'http://ws.prod.stage.foxpublish.net/EditorService.asmx?WSDL',
+    'Prod': 'http://ws.prod.foxpublish.net/EditorService.asmx?WSDL'
     }
+  env_options = ['Stage', 'Prod']
+  clip = ''
 
   def is_enabled(self):
     return True
 
   def run(self, edit):
-    options = ['Stage', 'Prod']
-    self.view.window().show_quick_panel(options, self.request_sessoinid)
+    self.clip = sublime.get_clipboard()
+    self.view.window().show_quick_panel(self.env_options, self.on_env_changed)
 
-  def request_sessoinid(self, index):
-    self.url = self.environments['stage'] if index == 0 else self.environments['prod']
+  def on_env_changed(self, index):
+    self.url = self.environments[self.env_options[index]]
+    self.check_clipboard()
+
+  def check_clipboard(self):
+    options = ['SessionID \'' + self.clip + '\'', 'Type it...'];
+    self.view.window().show_quick_panel(options, self.on_clip_selected)
+
+  def on_clip_selected(self, index):
+    if index == 0:
+      self.on_panel_done(self.clip)
+    else:
+      self.request_sessoinid()
+
+  def request_sessoinid(self):
     caption = "Set sessionid"
     initial_text = ""
     panel = self.view.window().show_input_panel (
