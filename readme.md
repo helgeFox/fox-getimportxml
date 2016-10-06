@@ -18,4 +18,4 @@ You need to have a package called Package Control installed. This is a plugin fo
 You need to have the [repository][] for FOX Publish added to package control then just install `FOX-GetImportXml` as any other package.
 
 [packagecontrol.io]: http://packagecontrol.io/installation/
-[repository]: https://raw.githubusercontent.com/helgeFox/FOX-sublime-repo/master/repository.json
+[repository]: https://github.com/helgeFox/FOX-sublime-repo
