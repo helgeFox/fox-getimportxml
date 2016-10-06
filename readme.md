@@ -17,5 +17,10 @@ You need to have a package called Package Control installed. This is a plugin fo
 
 You need to have the [repository for FOX Publish][] for FOX Publish added to package control then just install `FOX-GetImportXml` as any other package.
 
+####Configuring
+
+You can configure the plugin like any other plugin in Sublime Text like keyboard shortcuts etc. Check out the (unofficial) [documentation][].
+
 [packagecontrol.io]: http://packagecontrol.io/installation/
 [repository for FOX Publish]: https://github.com/helgeFox/FOX-sublime-repo
+[documentation]: http://docs.sublimetext.info/en/latest/intro.html
