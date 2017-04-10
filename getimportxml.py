@@ -80,7 +80,7 @@ class getimportxmlCommand(sublime_plugin.TextCommand):
       self.show_error('No xml returned from service.\nSure it was a \"{0}\" session id?\nSure it was not expired?'.format(self.env))
 
   def show_error(self, message):
-    sublime.messageBox(message)
+    sublime.error_message(message)
 
   def on_panel_change(self, abbr):
     if abbr:
